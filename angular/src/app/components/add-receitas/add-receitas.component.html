@@ -1,0 +1,83 @@
+<div class="main">
+  <div class="area1">
+
+    <h1>ADD RECEITAS</h1>
+    <!-- AREA DO TITULO -->
+    <form (ngSubmit)="saveRecipe()">
+      <div class="form-group">
+      
+        <label for="title">Título</label>
+        <input type="text" 
+               class="form-control" 
+               id="title" required 
+               [(ngModel)]="recipe.title" 
+               name="title">
+      
+      </div>
+      <!-- AREA DA DESCRICAO -->
+      <div class="form-group">
+      
+        <label for="description">Descrição</label>
+        <input 
+              type="text" 
+              class="form-control" 
+              id="description" 
+              required [(ngModel)]="recipe.description" 
+              name="description">
+      
+      </div>
+      <!-- 
+        * INGREDIENTES
+        * NAO SALVA NO DB!
+        * FAZER AINDA (14/07 - 19:08)
+      -->
+      <div class="form-group">
+      
+        <label for="ingredient">Ingredientes</label>
+        <input type="text" 
+               class="form-control" 
+               id="ingredient" 
+               [(ngModel)]="ingredientName" 
+               name="ingredient">
+        <!-- 
+          * BOTAO
+          * SALVAR        
+        -->
+        <button type="button" 
+                (click)="addIngredient()" 
+                class="btn btn-sm btn-primary ml-2">Adicionar Ingrediente</button>
+        <button type="submit" class="btn btn-primary mt-3">Salvar Receita</button>
+      
+      </div>
+      
+      
+    </form>
+  </div>
+  <!--
+    * NAO ESTA MOSTRANDO QUANDO MANDA PRO DB
+    * 14/07 - 14:12
+  -->
+  <div class="area2">
+    <div 
+        *ngIf="submitted" 
+        class="alert alert-success"> <!-- nao funciona (nao sei o pq!)-->
+      Receita adicionada com sucesso! 
+      
+      <button 
+          (click)="newRecipe()" 
+          class="btn btn-sm btn-success">
+                Adicionar Nova Receita
+      </button>
+    
+    <!-- LISTA QUANDO ADD ALGUMA RECEITA-->
+    </div>
+      <ul class="list-group mt-2">
+        <h1>LISTA DE INGREDIENTES</h1>
+        <li 
+          *ngFor="let ingredient of recipe.ingredients" 
+          class="list-group-item">
+          {{ ingredient.name }}
+        </li>
+      </ul>
+  </div> <!-- AREA 2-->
+</div>

@@ -1,0 +1,63 @@
+<!-- PESQUISAR -->
+<div class="list row container1">
+  <div class="area1 col-md-8">
+    <div class="input-group mb-3">
+      <!-- INPUT (PROCURAR POR NOME) -->
+      <input 
+        type="text" 
+        class="form-control" 
+        placeholder="PROCURAR POR NOME" 
+        [(ngModel)]="title" />
+      <!-- BOTAO DE ENVIAR -->
+      <div class="input-group-append">
+        
+        <button class="btn btn-outline-secondary" type="button" (click)="searchTitle()">
+          Search
+        </button>
+
+      </div>
+    </div>
+  </div>
+
+<!--
+ * TODOS OS ITEM DO DB  
+-->
+  <div class="area2 col-md-6">
+
+    <h4>Recipes List</h4>
+    <!-- MOSTRAR TODOS OS ITEM DO DB -->
+    <ul class="list-group">
+      <li 
+        *ngFor="let recipe of recipes; let i = index" 
+        class="list-group-item" 
+        [class.active]="i === currentIndex"
+        (click)="setActiveRecipe(recipe, i)">
+        {{ recipe.title }}
+      </li>
+    </ul>
+    <!-- 
+      * A FAZER AINDA O DELETE 
+      * 13/07 - 10:45
+      -->
+      <button class="m-3 btn btn-sm btn-danger" (click)="deleteAllRecipes()">Remover Todas as Receitas</button>
+  </div>
+  <!-- FIM -  TODOS OS ITEM DO DB  -->
+
+  <!-- Lista de receitas -->
+  <div>
+    <ul class="list-group">
+      <li 
+        *ngFor="let recipe of recipes; let i = index" 
+        class="list-group-item" 
+        [class.active]="i === currentIndex"
+        (click)="setActiveRecipe(recipe, i)">
+        
+        <h2>{{ recipe.title }}</h2>
+        <p>{{ recipe.description }}</p>
+      
+      </li>
+    </ul>
+  </div>
+
+
+</div>
