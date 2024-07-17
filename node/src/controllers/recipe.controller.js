@@ -3,28 +3,23 @@ const Recipe = db.Recipe;
 const Ingredient = db.Ingredient;
 
 exports.createRecipe = async (req, res) => {
-  const { title, description, ingredients } = req.body;
+  const { title, description, item } = req.body;
 
-  if (!ingredients || ingredients.length < 3) {
-    return res.status(400).send({ alert: 'A receita deve ter pelo menos 3 ingredientes' });
+  // Verifica se o array de itens foi fornecido e tem pelo menos 3 itens
+  if (!item || item.length < 3) {
+    return res.status(400).send({ alert: 'A receita deve ter pelo menos 3 itens' });
   }
 
   try {
-    const recipe = await Recipe.create({ title, description });
-
-    if (ingredients && ingredients.length > 0) {
-      const ingredientRecords = await Ingredient.findAll({
-        where: { name: ingredients }
-      });
-
-      await recipe.setIngredients(ingredientRecords);
-    }
+    // Cria a receita
+    const recipe = await Recipe.create({ title, description, item });
 
     res.send(recipe);
   } catch (error) {
     res.status(500).send({ message: error.message });
   }
 };
+
 
 // achar todos os Receitas
 exports.findAllRecipes = (req, res) => {

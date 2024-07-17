@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { AppService } from '../../services/app.service';
-import { Recipe, Ingredient } from '../../models/app.model';
+import { Recipe } from '../../models/app.model';
 
 @Component({
   selector: 'app-add-receitas',
@@ -11,12 +11,14 @@ export class AddReceitasComponent {
   recipe: Recipe = {
     id: 0,
     title: '',
+    item: '', // Inicialize o item como uma string vazia
     description: '',
     published: false,
     ingredients: []
   };
   ingredientName: string = '';
   submitted = false;
+  items: string[] = []; // Array para armazenar os itens adicionados
 
   constructor(private appService: AppService) { }
 
@@ -33,10 +35,18 @@ export class AddReceitasComponent {
       );
   }
 
-  addIngredient(): void {
+  addItem(): void {
     if (this.ingredientName.trim()) {
-      const newIngredient: Ingredient = { id: 0, name: this.ingredientName };
-      this.recipe.ingredients.push(newIngredient);
+      this.items.push(this.ingredientName);
+      if (this.recipe.item) {
+        // Verifica se já existe algum item na lista
+        const items = JSON.parse(this.recipe.item);
+        items.push(this.ingredientName);
+        this.recipe.item = JSON.stringify(items);
+      } else {
+        // Se não existir, cria uma nova lista com o item
+        this.recipe.item = JSON.stringify([this.ingredientName]);
+      }
       this.ingredientName = ''; // Limpa o campo de entrada
     }
   }
@@ -45,9 +55,10 @@ export class AddReceitasComponent {
     this.recipe = {
       id: 0,
       title: '',
+      item: '', // Reinicializa o item como uma string vazia
       description: '',
-      published: false,
-      ingredients: []
+      ingredients: [],
+      published: false
     };
     this.ingredientName = '';
     this.submitted = false;

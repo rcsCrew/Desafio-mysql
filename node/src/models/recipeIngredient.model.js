@@ -14,7 +14,8 @@ module.exports = (sequelize, Sequelize) => {
         model: 'Ingredients',
         key: 'id'
       }
-    }
+    },
+    
   });
 
   return RecipeIngredient;

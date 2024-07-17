@@ -38,9 +38,9 @@ app.get("/", (req, res) => {
   res.json({ message: "Bem-vindo à aplicação." });
 });
 //
-db.sequelize.sync({ force: true }).then(() => {
-  console.log("Drop and re-sync db.");
-});
+//db.sequelize.sync({ force: true }).then(() => {
+//  console.log("Drop and re-sync db.");
+//});
 
 
 // Set PORTA

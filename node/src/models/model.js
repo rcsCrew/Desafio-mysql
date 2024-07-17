@@ -6,11 +6,22 @@ module.exports = (sequelize, Sequelize) => {
     },
     description: {
       type: Sequelize.TEXT
+    },
+    // 17/7
+    item: {  
+      type: Sequelize.TEXT,
+      allowNull: true,
+      get() {
+        const value = this.getDataValue('item');
+        return value ? JSON.parse(value) : [];
+      },
+      set(value) {
+        this.setDataValue('item', JSON.stringify(value));
+      }
     }
   });
 
   Recipe.associate = (models) => {
-  //  Recipe.belongsToMany(models.Ingredient, { through: 'RecipeIngredients' });
     Recipe.belongsToMany(models.Ingredient, { through: models.RecipeIngredient });
   };
 
