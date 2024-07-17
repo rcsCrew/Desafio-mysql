@@ -1,7 +1,7 @@
 const db = require("../models");
 const Recipe = db.Recipe;
 const Ingredient = db.Ingredient;
-
+const { Op } = require("sequelize");
 exports.createRecipe = async (req, res) => {
   const { title, description, item } = req.body;
 
@@ -18,6 +18,27 @@ exports.createRecipe = async (req, res) => {
   } catch (error) {
     res.status(500).send({ message: error.message });
   }
+};
+// 17/07
+// Buscar receitas por item
+exports.findAllByItem = (req, res) => {
+  const { item } = req.query;
+
+  Recipe.findAll({
+    where: {
+      item: {
+        [Op.like]: `%${item}%` // Procura por receitas que contenham o item especificado
+      }
+    }
+  })
+    .then(recipes => {
+      res.status(200).send(recipes);
+    })
+    .catch(err => {
+      res.status(500).send({
+        message: err.message || "Erro ao buscar receitas por item de ingrediente."
+      });
+    });
 };
 
 

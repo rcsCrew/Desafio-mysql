@@ -1,4 +1,3 @@
-<!-- PESQUISAR -->
 <div class="list row container1">
   <div class="area1 col-md-8">
     <div class="input-group mb-3">
@@ -10,22 +9,32 @@
         [(ngModel)]="title" />
       <!-- BOTAO DE ENVIAR -->
       <div class="input-group-append">
-        
         <button class="btn btn-outline-secondary" type="button" (click)="searchTitle()">
-          Search
+          Search by Title
         </button>
+      </div>
+    </div>
 
+    <div class="input-group mb-3">
+      <!-- INPUT (PROCURAR POR ITEM) -->
+      <input 
+        type="text" 
+        class="form-control" 
+        placeholder="PROCURAR POR ITEM" 
+        [(ngModel)]="item" />
+      <!-- BOTAO DE ENVIAR -->
+      <div class="input-group-append">
+        <button class="btn btn-outline-secondary" type="button" (click)="searchItem()">
+          Search by Item
+        </button>
       </div>
     </div>
   </div>
 
-<!--
- * TODOS OS ITEM DO DB  
--->
+  <!-- AREA DE MOSTRAR ITEM DB -->
   <div class="area2 col-md-6">
-
     <h4>Recipes List</h4>
-    <!-- MOSTRAR TODOS OS ITEM DO DB -->
+    <!-- MOSTRAR ITEM DB -->
     <ul class="list-group">
       <li 
         *ngFor="let recipe of recipes; let i = index" 
@@ -35,15 +44,12 @@
         {{ recipe.title }}
       </li>
     </ul>
-    <!-- 
-      * A FAZER AINDA O DELETE 
-      * 13/07 - 10:45
-      -->
-      <button class="m-3 btn btn-sm btn-danger" (click)="deleteAllRecipes()">Remover Todas as Receitas</button>
-  </div>
-  <!-- FIM -  TODOS OS ITEM DO DB  -->
 
-  <!-- Lista de receitas -->
+    <!-- A FAZER AINDA O DELETE -->
+    <button class="m-3 btn btn-sm btn-danger" (click)="deleteAllRecipes()">Remover Todas as Receitas</button>
+  </div>
+
+  <!-- LISTA DE RECEITAS -->
   <div>
     <ul class="list-group">
       <li 
@@ -58,6 +64,4 @@
       </li>
     </ul>
   </div>
-
-
 </div>

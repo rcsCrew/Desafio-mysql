@@ -34,11 +34,15 @@ export class AppService {
   deleteAllRecipes(): Observable<any> {
     return this.http.delete(`${this.apiUrl}/recipes`);
   }
-  // BUSCAR POR TITULO
-  findByTitle(title: string): Observable<Recipe[]> {
-    const params = new HttpParams().set('title', title);
-    return this.http.get<Recipe[]>(`${this.apiUrl}/recipes/search`, { params });
-  }
+// Buscar receitas por título
+findByTitle(title: string): Observable<Recipe[]> {
+  return this.http.get<Recipe[]>(`${this.apiUrl}/recipes/search?title=${title}`);
+}
+
+// Buscar receitas por item
+findByItem(item: string): Observable<Recipe[]> {
+  return this.http.get<Recipe[]>(`${this.apiUrl}/recipes/search?item=${item}`);
+}
 
   // BUSCAR INGREDIETES POR ID (NAO FUNCIONA)
   getRecipesByIngredient(ingredientId: number): Observable<Recipe[]> {

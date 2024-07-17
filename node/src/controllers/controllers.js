@@ -72,8 +72,29 @@ exports.findAllByTitle = (req, res) => {
       res.status(200).send(recipes);
     })
     .catch(err => {
-      res.status(500).send({
-        message: "eRroR ao achar o titulo:" + titulo});
+      res.status(520).send({
+        message: "eRroR ao achar o titulo:" + title});
     });
 };
+
+exports.findAllByItem = (req, res) => {
+  const { item } = req.query;
+
+  Recipe.findAll({
+    where: {
+      item: {
+        [Op.like]: `%${item}%` // Procura por receitas que contenham o item especificado
+      }
+    }
+  })
+    .then(data => {
+      res.send(data);
+    })
+    .catch(err => {
+      res.status(500).send({
+        message: err.message || "Não foi possível encontrar as receitas pelo item."
+      });
+    });
+};
+
 

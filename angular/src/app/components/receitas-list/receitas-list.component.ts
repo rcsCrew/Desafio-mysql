@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { AppService } from '../../services/app.service';
-import { Recipe, Ingredient } from '../../models/app.model';
+import { Recipe } from '../../models/app.model';
 
 @Component({
   selector: 'app-receitas-list',
@@ -9,12 +9,11 @@ import { Recipe, Ingredient } from '../../models/app.model';
 })
 export class ReceitasListComponent implements OnInit {
   recipes: Recipe[] = [];
-  id: number = 0; // Campo para armazenar o ID do ingrediente (CASO QUEIRA ADICIONAR BUSCAR POR ID POREM NAO ESTA SENDO USADO)
   currentIndex = -1;
   title = '';
+  item = '';
 
   constructor(private appService: AppService) {}
-
   // 19:21
   // 12/07
   // AO SER INICIADO ELE BUSCA TODOS OS ITEM NO DB
@@ -22,13 +21,11 @@ export class ReceitasListComponent implements OnInit {
     this.retrieveRecipes();
   }
 
-
   retrieveRecipes(): void {
     this.appService.getAllRecipes()
       .subscribe(
         (data: Recipe[]) => {
           this.recipes = data;
-          console.log(data);
         },
         (error: any) => {
           console.log(error);
@@ -36,13 +33,10 @@ export class ReceitasListComponent implements OnInit {
       );
   }
 
-  // VERIFICA QUAL INDICE ATUAL
   setActiveRecipe(recipe: Recipe, index: number): void {
     this.currentIndex = index;
   }
-
-  // DELETAR RECIPE
-  // NAO ADICIONADO AO APP SERVICE
+// deletar desativado
   deleteAllRecipes(): void {
     this.appService.deleteAllRecipes()
       .subscribe(
@@ -55,15 +49,13 @@ export class ReceitasListComponent implements OnInit {
         }
       );
   }
-
-  // BUSCAR TITLE POR TITULO
+// buscar por title
   searchTitle(): void {
     if (this.title.trim()) {
       this.appService.findByTitle(this.title)
         .subscribe(
           (data: Recipe[]) => {
             this.recipes = data;
-            console.log(data);
           },
           (error: any) => {
             console.log(error);
@@ -73,6 +65,20 @@ export class ReceitasListComponent implements OnInit {
       this.retrieveRecipes();
     }
   }
-
-  
+// buscar item
+  searchItem(): void {
+    if (this.item.trim()) {
+      this.appService.findByItem(this.item)
+        .subscribe(
+          (data: Recipe[]) => {
+            this.recipes = data;
+          },
+          (error: any) => {
+            console.log(error);
+          }
+        );
+    } else {
+      this.retrieveRecipes();
+    }
+  }
 }
